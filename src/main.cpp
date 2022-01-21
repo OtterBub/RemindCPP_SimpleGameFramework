@@ -13,8 +13,6 @@ int main (int argc, char *argv[])
     GameFrame frame = GameFrame();
 
     frame.Run();
-
-    // system("clear");
     
     return 0;
 }

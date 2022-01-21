@@ -13,7 +13,7 @@ class GameFrame {
 
 
     private:
-
+        int mGameState;
 };
 
 #endif

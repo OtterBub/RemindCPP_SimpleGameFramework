@@ -10,8 +10,11 @@
                 //"${file}",
                 "${workspaceFolder}/src/main.cpp",
                 "${workspaceFolder}/src/**/*.cpp",
+                "${workspaceFolder}/src/**/**/*.cpp",
                 "-o",
                 "${workspaceFolder}/output/${fileBasenameNoExtension}.out",
+                "&&",
+                "clear",
                 "&&",
                 "${workspaceFolder}/output/${fileBasenameNoExtension}.out"
                 
