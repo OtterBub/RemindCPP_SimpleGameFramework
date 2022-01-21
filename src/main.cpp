@@ -17,7 +17,7 @@ int main (int argc, char *argv[])
     }
     std::cout << std::endl;
 
-    int iGameState = GAMESTATE_RUN;
+    int iGameState = GAMESTATE_EXIT;
     while(iGameState == GAMESTATE_RUN) {
 
         
