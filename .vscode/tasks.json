@@ -7,11 +7,14 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                //"${file}",
+                "${workspaceFolder}/src/main.cpp",
+                "${workspaceFolder}/src/**/*.cpp",
                 "-o",
-                "${fileDirname}/../output/${fileBasenameNoExtension}.out",
+                "${workspaceFolder}/output/${fileBasenameNoExtension}.out",
                 "&&",
-                "${fileDirname}/../output/${fileBasenameNoExtension}.out"
+                "${workspaceFolder}/output/${fileBasenameNoExtension}.out"
+                
             ],
             "options": {
                 "cwd": "${fileDirname}"

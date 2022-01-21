@@ -1,29 +1,20 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "header/define.h"
+#include "framework/gameframe.hpp"
+
+// by Park SungKyoung
+// 2022/01/21 
 
 int main (int argc, char *argv[])
 {
-    std::cout << "Hello World!";
+    std::cout << "Hello Game FrameWork!" << std::endl;
 
-    std::vector<std::string> testVector;
-    testVector.push_back("Hello");
-    testVector.push_back("World");
-    testVector.push_back("C++ Test");
+    GameFrame frame = GameFrame();
 
-    for(const std::string& word : testVector ) {
-        std::cout << word << " ";
-    }
-    std::cout << std::endl;
+    frame.Run();
 
-    int iGameState = GAMESTATE_EXIT;
-    while(iGameState == GAMESTATE_RUN) {
-
-        
-    }
-
-    system("clear");
+    // system("clear");
     
     return 0;
 }
