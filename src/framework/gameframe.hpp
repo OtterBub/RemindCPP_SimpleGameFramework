@@ -1,5 +1,7 @@
-#ifndef __GAMEFRAME_H__
-#define __GAMEFRAME_H__
+#ifndef __GAMEFRAME_HPP__
+#define __GAMEFRAME_HPP__
+
+#include "manager/keyinputmanager.hpp"
 
 #define GAMESTATE_EXIT 0
 #define GAMESTATE_RUN 1
@@ -14,6 +16,7 @@ class GameFrame {
 
     private:
         int mGameState;
+        KeyInputManager mKeyManager;
 };
 
-#endif
+#endif //__GAMEFRAME_HPP__

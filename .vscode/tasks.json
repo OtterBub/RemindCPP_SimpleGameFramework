@@ -11,12 +11,13 @@
                 "${workspaceFolder}/src/main.cpp",
                 "${workspaceFolder}/src/**/*.cpp",
                 "${workspaceFolder}/src/**/**/*.cpp",
+                "-lcurses",
                 "-o",
-                "${workspaceFolder}/output/${fileBasenameNoExtension}.out",
-                "&&",
-                "clear",
-                "&&",
-                "${workspaceFolder}/output/${fileBasenameNoExtension}.out"
+                "${workspaceFolder}/output/main",
+                // "&&",
+                // "clear",
+                // "&&",
+                // "${workspaceFolder}/output/main"
                 
             ],
             "options": {

@@ -1,5 +1,6 @@
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
+#ifndef __OBJECT_HPP__
+#define __OBJECT_HPP__
+#include "struct.h"
 
 class Object {
     public:
@@ -7,10 +8,11 @@ class Object {
         ~Object();
 
         int Draw();
+        iPos2D GetPos();
+        int SetPos(int x, int y);
 
     private:
-        int mPosX;
-        int mPosY;
+        iPos2D mPos;
 };
 
-#endif
+#endif //__OBJECT_HPP__

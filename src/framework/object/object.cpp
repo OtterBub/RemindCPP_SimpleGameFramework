@@ -2,8 +2,8 @@
 #include <iostream>
 
 Object::Object(){
-    mPosX = 0;
-    mPosY = 0;
+    mPos.x = 0;
+    mPos.y = 0;
 }
 Object::~Object(){
     
@@ -11,5 +11,15 @@ Object::~Object(){
 
 int Object::Draw() {
     std::cout << "Object.Draw()" << std::endl;
+    return 0;
+}
+
+iPos2D Object::GetPos() {
+    return mPos;
+}
+
+int Object::SetPos(int x, int y) {
+    mPos.x = x;
+    mPos.y = y;
     return 0;
 }
