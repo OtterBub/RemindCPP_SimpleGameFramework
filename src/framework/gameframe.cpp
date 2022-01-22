@@ -13,11 +13,9 @@ GameFrame::~GameFrame(){
 int GameFrame::Run(){
     std::cout << "GameFrame.Run()" << std::endl;
     Scene s;
-    s.Draw();
     int result;
     while(1) {
         int keyResult = mKeyManager.InputKey();
-        mvprintw(0, 0, "mKeyManager.InputKey(): %c", keyResult);
         std::string keyResultStr = "";
         switch(keyResult)
         {
@@ -31,10 +29,10 @@ int GameFrame::Run(){
                 keyResultStr = "Default        ";
                 break;
         }
-
-        mvprintw(1, 0, "KeyResultStr %s", keyResultStr.c_str());
-            
-
+        // mvprintw(0, 0, "keyResultStr: %s", keyResultStr.c_str());
+        s.KeyInput(keyResult);
+        s.Draw();
+        
     }
     return 0;
 }

@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <curses.h>
+#include "../object/object.hpp"
 
 class Scene {
     public:
@@ -10,17 +12,19 @@ class Scene {
         ~Scene();
 
        int Draw();
+       int KeyInput(int key);
        int SetDisplaySize(int width, int height);
        int SetBlankChar(char c);
        
-
     private:
         int miWidth;
         int miHeight;
-        std::vector<char> mvDisplay;
+        std::string mstrDisplay;
         char mcBlankChar;
 
         int InitDisplay();
+
+        Object mObject; // obj test
 };
 
 #endif //__SCENE_HPP__

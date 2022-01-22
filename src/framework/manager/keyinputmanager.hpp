@@ -18,7 +18,7 @@ class KeyInputManager {
         int InputKey();
     private:
         WINDOW* mWin;
-        char mLastKeyInput;
+        int mLastKeyInput;
 };
 
 #endif
