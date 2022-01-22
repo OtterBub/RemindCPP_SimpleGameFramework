@@ -13,7 +13,7 @@
                 "${workspaceFolder}/src/**/**/*.cpp",
                 "-lcurses",
                 "-o",
-                "${workspaceFolder}/output/main",
+                "${workspaceFolder}/output/main.out",
                 // "&&",
                 // "clear",
                 // "&&",
