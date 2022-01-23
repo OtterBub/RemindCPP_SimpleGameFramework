@@ -2,23 +2,27 @@
 #include <iostream>
 
 ObjectBlock::ObjectBlock() : Object() {
-    mPos.x = 0;
-    mPos.y = 0;
-    mModel = '0';
+    miSpeed = 1000;
+    iTime = 0;
+    isStop = false;
 }
 ObjectBlock::~ObjectBlock(){
     Object::~Object();
 }
 
 int ObjectBlock::Draw() {
-    
     return 0;
 }
 
 int ObjectBlock::Update(int time) {
     if(!isStop) {
-        mPos.y++;
+        iTime += time;
+        if(iTime > miSpeed) {
+            mPos.y++;
+            iTime = 0;
+        }
     }
+    mPos.y++;
     return 0;
 }
 

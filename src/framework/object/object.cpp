@@ -18,6 +18,8 @@ int Object::Draw() {
 }
 
 int Object::Update(int time) {
+    // Test Object.Update()
+    // mPos.y ++;
     
     return 0;
 }

@@ -10,9 +10,10 @@ class ObjectManager {
         ~ObjectManager();
 
         int Draw();
+        int Update(int time);
         int AddObj(Object& obj);
 
-        const std::vector<Object>& GetObjectVector();
+        std::vector<Object>& GetObjectVector();
 
     private:
         std::vector<Object> mvObject;

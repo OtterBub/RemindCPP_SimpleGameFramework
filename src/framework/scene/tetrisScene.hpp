@@ -12,6 +12,7 @@ class TetrisScene : public Scene {
         ~TetrisScene();
 
        int Draw();
+       int Update(int time);
        int KeyInput(int key);
        int SetDisplaySize(int width, int height);
        int SetBlankChar(char c);

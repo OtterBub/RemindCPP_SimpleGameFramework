@@ -2,6 +2,7 @@
 
 #include "testScene.hpp"
 #include "../object/object.hpp"
+#include "../object/objectblock.hpp"
 #include <iostream>
 
 // MacOS
@@ -11,6 +12,20 @@
 
 TetrisScene::TetrisScene() : Scene::Scene() {
     mStrTest = "";
+
+    ObjectBlock o;
+    o.SetModel('A');
+    o.SetPos(1, 1);
+    mObjManager.GetObjectVector().push_back(o);
+
+    o.SetModel('B');
+    o.SetPos(2, 2);
+    mObjManager.GetObjectVector().push_back(o);
+
+    Object b;
+    b.SetModel('C');
+    b.SetPos(2, 3);
+    mObjManager.GetObjectVector().push_back(b);
 }
 
 TetrisScene::~TetrisScene() {
@@ -23,11 +38,16 @@ int TetrisScene::Draw() {
     
     mvprintw(0, 0, "%s", mstrDisplay.c_str());
 
-
+    mObjManager.Draw();
 
     // Test Draw Call Count
     mvprintw(miHeight + 1, 0, "TetrisScene::Draw() Call count: %d", callCount);
     mvprintw(miHeight + 2, 0, "KeyInput : %s                 ", mStrTest.c_str());
+    return 0;
+}
+
+int TetrisScene::Update(int time) {
+    mObjManager.Update(time);
     return 0;
 }
 

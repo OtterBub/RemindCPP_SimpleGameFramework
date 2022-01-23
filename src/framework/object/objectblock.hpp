@@ -17,8 +17,12 @@ class ObjectBlock : public Object {
         char GetModel();
         int SetModel(char c);
 
+        int SetSpeed(int speed);
+
     private:
         bool isStop;
+        int iTime;
+        int miSpeed;
 };
 
 #endif

@@ -16,10 +16,17 @@ int ObjectManager::Draw() {
     return 0;
 }
 
+int ObjectManager::Update(int time) {
+    for(Object& obj : mvObject) {
+        obj.Update(time);
+    }
+    return 0;
+}
+
 int ObjectManager::AddObj(Object& obj) {
     return 0;
 }
 
-const std::vector<Object>& ObjectManager::GetObjectVector() {
+std::vector<Object>& ObjectManager::GetObjectVector() {
     return mvObject;
 }
