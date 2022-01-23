@@ -11,12 +11,12 @@ class ObjectManager {
 
         int Draw();
         int Update(int time);
-        int AddObj(Object& obj);
+        Object* AddObj(Object* obj);
 
-        std::vector<Object>& GetObjectVector();
+        std::vector<Object*>& GetObjectVector();
 
     private:
-        std::vector<Object> mvObject;
+        std::vector<Object*> mvObject;
 };
 
 

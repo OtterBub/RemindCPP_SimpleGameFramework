@@ -7,8 +7,8 @@ class Object {
         Object();
         ~Object();
 
-        int Draw();
-        int Update(int time);
+        virtual int Draw();
+        virtual int Update(int time);
 
         iPos2D GetPos();
         int SetPos(int x, int y);
@@ -18,7 +18,7 @@ class Object {
 
     protected:
         iPos2D mPos;
-        char mModel;
+        wchar_t mModel;
 };
 
 #endif //__OBJECT_HPP__

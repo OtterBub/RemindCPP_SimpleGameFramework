@@ -13,19 +13,27 @@
 TetrisScene::TetrisScene() : Scene::Scene() {
     mStrTest = "";
 
-    ObjectBlock o;
-    o.SetModel('A');
-    o.SetPos(1, 1);
-    mObjManager.GetObjectVector().push_back(o);
+    ObjectBlock* o = new ObjectBlock();
+    o->SetModel('A');
+    o->SetPos(1, 1);
+    o->SetSpeed(250);
+    mObjManager.AddObj(o);
 
-    o.SetModel('B');
-    o.SetPos(2, 2);
-    mObjManager.GetObjectVector().push_back(o);
+    o = new ObjectBlock();
+    o->SetModel('B');
+    o->SetPos(2, 2);
+    mObjManager.AddObj(o);
 
-    Object b;
-    b.SetModel('C');
-    b.SetPos(2, 3);
-    mObjManager.GetObjectVector().push_back(b);
+    Object* b = new Object();
+    b->SetModel('C');
+    b->SetPos(2, 3);
+    mObjManager.AddObj(b);
+
+    o = (ObjectBlock*)mObjManager.AddObj(new ObjectBlock());
+    o->SetModel('D');
+    o->SetPos(5, 5);
+    o->SetSpeed(500);
+    o->SetStop(true);
 }
 
 TetrisScene::~TetrisScene() {

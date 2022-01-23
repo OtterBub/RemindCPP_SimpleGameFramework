@@ -1,6 +1,7 @@
 #ifndef __OBJECTBLOCK_HPP__
 #define __OBJECTBLOCK_HPP__
 
+#include <vector>
 #include "object.hpp"
 
 class ObjectBlock : public Object {
@@ -18,11 +19,13 @@ class ObjectBlock : public Object {
         int SetModel(char c);
 
         int SetSpeed(int speed);
+        int SetStop(bool stop);
 
     private:
         bool isStop;
         int iTime;
         int miSpeed;
+        
 };
 
 #endif
