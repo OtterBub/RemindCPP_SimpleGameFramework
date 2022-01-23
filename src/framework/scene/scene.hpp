@@ -16,15 +16,13 @@ class Scene {
        int SetDisplaySize(int width, int height);
        int SetBlankChar(char c);
        
-    private:
+    protected:
+        int InitDisplay();
+
         int miWidth;
         int miHeight;
         std::string mstrDisplay;
         char mcBlankChar;
-
-        int InitDisplay();
-
-        Object mObject; // obj test
 };
 
 #endif //__SCENE_HPP__

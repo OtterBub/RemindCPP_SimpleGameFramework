@@ -1,5 +1,6 @@
 #include "object.hpp"
 #include <iostream>
+#include <ncurses.h>
 
 Object::Object(){
     mPos.x = 0;
@@ -12,6 +13,7 @@ Object::~Object(){
 
 int Object::Draw() {
     // std::cout << "Object.Draw()" << std::endl;
+    mvprintw(mPos.y, mPos.x, "%c", mModel);
     return 0;
 }
 

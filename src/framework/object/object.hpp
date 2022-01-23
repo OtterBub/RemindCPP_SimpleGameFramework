@@ -14,7 +14,7 @@ class Object {
         char GetModel();
         int SetModel(char c);
 
-    private:
+    protected:
         iPos2D mPos;
         char mModel;
 };

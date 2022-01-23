@@ -18,33 +18,12 @@ Scene::~Scene() {
 }
 
 int Scene::Draw() { 
-    mvprintw(0, 0, "%s", mstrDisplay.c_str());
-
-    // Test Draw Chars
-    mvprintw(mObject.GetPos().y, mObject.GetPos().x, "%c", mObject.GetModel());
+    
     return 0;
 }
 
 int Scene::KeyInput(int key) {
-    switch(key)
-        {
-            case KEY_DOWN:
-                mObject.SetPos(mObject.GetPos().x, mObject.GetPos().y+1);
-                break;
-            case KEY_UP:
-                mObject.SetPos(mObject.GetPos().x, mObject.GetPos().y-1);
-                break;
-            case KEY_RIGHT:
-                mObject.SetPos(mObject.GetPos().x+1, mObject.GetPos().y);
-                break;
-            case KEY_LEFT:
-                mObject.SetPos(mObject.GetPos().x-1, mObject.GetPos().y);
-                break;
-            default:
-                break;
-                
-                break;
-        }
+  
     return 0;
 }
 

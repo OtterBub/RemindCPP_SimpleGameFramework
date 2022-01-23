@@ -12,6 +12,7 @@
                 "${workspaceFolder}/src/**/*.cpp",
                 "${workspaceFolder}/src/**/**/*.cpp",
                 "-lcurses",
+                "-std=c++11",
                 "-o",
                 "${workspaceFolder}/output/main.out",
                 // "&&",
