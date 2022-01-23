@@ -11,7 +11,14 @@ ObjectBlock::~ObjectBlock(){
 }
 
 int ObjectBlock::Draw() {
-    // std::cout << "ObjectBlock.Draw()" << std::endl;
+    
+    return 0;
+}
+
+int ObjectBlock::Update(int time) {
+    if(!isStop) {
+        mPos.y++;
+    }
     return 0;
 }
 

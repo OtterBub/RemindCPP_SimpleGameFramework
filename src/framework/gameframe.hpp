@@ -12,11 +12,14 @@ class GameFrame {
         ~GameFrame();
         
         int Run();
+        int SetFPS(int fps);
 
 
     private:
         int mGameState;
         KeyInputManager mKeyManager;
+        int miFPS;
+        int mWaitMilisec;
 };
 
 #endif //__GAMEFRAME_HPP__

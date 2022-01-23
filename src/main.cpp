@@ -12,7 +12,7 @@
 
 int main (int argc, char *argv[])
 {
-    std::cout << "Hello Game FrameWork!" << std::endl;
+    std::cout << "Hello Game FrameWork For Tetris!" << std::endl;
 
     GameFrame frame = GameFrame();
     frame.Run();

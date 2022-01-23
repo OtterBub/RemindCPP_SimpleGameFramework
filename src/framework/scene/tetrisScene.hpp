@@ -3,11 +3,13 @@
 
 #include "scene.hpp"
 #include "../manager/objectmanager.hpp"
+#include <vector>
+#include <string>
 
-class TestrisScene : public Scene {
+class TetrisScene : public Scene {
     public:
-        TestrisScene();
-        ~TestrisScene();
+        TetrisScene();
+        ~TetrisScene();
 
        int Draw();
        int KeyInput(int key);
@@ -16,6 +18,8 @@ class TestrisScene : public Scene {
        
     protected:
         ObjectManager mObjManager;
+        std::vector<std::vector<bool>> mvbIsBlock;
+        std::string mStrTest;
 };
 
 

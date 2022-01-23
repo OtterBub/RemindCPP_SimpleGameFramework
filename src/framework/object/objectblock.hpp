@@ -9,6 +9,8 @@ class ObjectBlock : public Object {
         ~ObjectBlock();
 
         int Draw();
+        int Update(int time);
+
         iPos2D GetPos();
         int SetPos(int x, int y);
         
@@ -16,7 +18,7 @@ class ObjectBlock : public Object {
         int SetModel(char c);
 
     private:
-        
+        bool isStop;
 };
 
 #endif

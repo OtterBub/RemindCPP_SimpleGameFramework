@@ -8,6 +8,8 @@ class Object {
         ~Object();
 
         int Draw();
+        int Update(int time);
+
         iPos2D GetPos();
         int SetPos(int x, int y);
         

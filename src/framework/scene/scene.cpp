@@ -22,6 +22,11 @@ int Scene::Draw() {
     return 0;
 }
 
+int Scene::Update(int time) {
+
+    return 0;
+}
+
 int Scene::KeyInput(int key) {
   
     return 0;

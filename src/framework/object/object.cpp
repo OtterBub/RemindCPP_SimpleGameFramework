@@ -17,6 +17,11 @@ int Object::Draw() {
     return 0;
 }
 
+int Object::Update(int time) {
+    
+    return 0;
+}
+
 iPos2D Object::GetPos() {
     return mPos;
 }

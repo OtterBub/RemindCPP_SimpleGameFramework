@@ -12,7 +12,7 @@ KeyInputManager::~KeyInputManager() {
 }
 
 int KeyInputManager::InputKey() {
-    timeout(1000);
+    timeout(0);    
     mLastKeyInput = wgetch(mWin);
     return mLastKeyInput;
 }
