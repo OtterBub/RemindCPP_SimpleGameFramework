@@ -51,16 +51,39 @@ int TetrisScene::Update(int time) {
         if(objB->GetIsDownMove()){
             bool downIsBlock = false;
             std::vector<iPos2D> objBPosVec = objB->GetRealPos();
+            
+            // Collision Check Between Control Block And Fixed Block
             for(iPos2D pos : objBPosVec) {
                 if(mvecIsBlock[pos.x][pos.y+1]) {
                    downIsBlock = true; 
                 };
             }
             if(downIsBlock) {
+                // Set Display Fixed Block
                 for(iPos2D pos : objBPosVec) {
                     mvecIsBlock[pos.x][pos.y] = true;
                     mstrDisplay[pos.x + (pos.y * (miWidth + 1))] = objB->GetModel();
                 }
+
+                // Line Clear (Working)
+                bool lineClear = false;
+                for(int iy = 0; iy < miHeight - 1; iy++) {
+                    
+                    for(int ix = 1; ix < miWidth - 1; ix++) {
+                        if(mvecIsBlock[ix][iy] == false) {
+                            lineClear = false;
+                        }
+                    }
+                    if(lineClear) {
+                        for(int ix = 1; ix <miWidth - 1; ix++)
+                        {
+                            mstrDisplay[ix + (iy * (miWidth + 1))] = ' ';
+                        }
+                    }
+                }
+                    
+
+                // Add New Block Object
                 ObjectBlock* o;
                 o = (ObjectBlock*)mObjManager.AddObj(new ObjectBlock());
                 o->SetModel('D');
@@ -68,6 +91,8 @@ int TetrisScene::Update(int time) {
                 o->SetSpeed(500);
                 o->SetStop(false);
                 o->SetBlockModel(BLOCKMODEL_L);
+
+                // Set Control Block
                 mControlBlock = o;
             } else {
                 objB->DownMove();
@@ -90,15 +115,17 @@ int TetrisScene::KeyInput(int key) {
             switch(key) {
                 case KEY_DOWN:
                     mStrTest = "KEY_DOWN";
+                    // Block Down Control
                     objB->SetIsDownMove(true);
                     break;
                 case KEY_UP:
                     mStrTest = "KEY_UP";
+                    // Block Rotation
                     objB->BlockRotate(1);
                     break;
                 case KEY_RIGHT:
                     mStrTest = "KEY_RIGHT";
-
+                    // RIGHT Collision Check
                     for(iPos2D pos : objpos) {
                         if(mvecIsBlock[pos.x+1][pos.y] == true)
                             move = false;
@@ -110,7 +137,7 @@ int TetrisScene::KeyInput(int key) {
 
                 case KEY_LEFT:
                     mStrTest = "KEY_LEFT";
-
+                    // LEFT Collision Check
                     for(iPos2D pos : objpos) {
                         if(mvecIsBlock[pos.x-1][pos.y] == true)
                             move = false;
