@@ -18,6 +18,7 @@ GameFrame::~GameFrame(){
 int GameFrame::Run(){
     std::cout << "GameFrame.Run()" << std::endl;
     TetrisScene s;
+    s.SetDisplaySize(15, 20);
     int result;
     std::chrono::system_clock::time_point curTime = std::chrono::system_clock::now();
     std::chrono::duration<double> deltaTime;

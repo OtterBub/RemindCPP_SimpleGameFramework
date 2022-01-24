@@ -35,6 +35,7 @@ TetrisScene::TetrisScene() : Scene::Scene() {
     o->SetPos(5, 5);
     o->SetSpeed(500);
     o->SetStop(true);
+    o->SetBlockModel(BLOCKMODEL_L);
     mControlBlock = o;
 }
 
@@ -65,10 +66,10 @@ int TetrisScene::Update(int time) {
 
 int TetrisScene::KeyInput(int key) {
     iPos2D blockPos = {0, 0};
-    
+    ObjectBlock* objB;
     if(mControlBlock != nullptr)
         blockPos = mControlBlock->GetPos();
-        
+        objB = (ObjectBlock*) mControlBlock;
 
     switch(key) {
         case KEY_DOWN:
@@ -76,15 +77,17 @@ int TetrisScene::KeyInput(int key) {
             break;
         case KEY_UP:
             mStrTest = "KEY_UP";
-            
+            objB->BlockRotate(1);
             break;
         case KEY_RIGHT:
             mStrTest = "KEY_RIGHT";
-            mControlBlock->SetPos(blockPos.x+1, blockPos.y);
+            if (mvecIsBlock[blockPos.x+1][blockPos.y] == false)
+                mControlBlock->SetPos(blockPos.x+1, blockPos.y);
             break;
         case KEY_LEFT:
             mStrTest = "KEY_LEFT";
-            mControlBlock->SetPos(blockPos.x-1, blockPos.y);
+            if (mvecIsBlock[blockPos.x-1][blockPos.y] == false)
+                mControlBlock->SetPos(blockPos.x-1, blockPos.y);
             break;
         default:
             break;
@@ -93,14 +96,27 @@ int TetrisScene::KeyInput(int key) {
 }
 
 int TetrisScene::SetDisplaySize(int width, int height) {
-    mvprintw(20, 0, "TestrisScene Call SetDisplaySize()");
+    Scene::SetDisplaySize(width, height);
+
     mvbIsBlock = std::vector<std::vector<bool>> (width, std::vector<bool>(height, false));
-    if (isBlock != nullptr)
-        delete[] isBlock;
-        
-    // Block Check ([x + (y * width)] == true)
-    isBlock = new bool[width * height];
-    return Scene::SetDisplaySize(width, height);
+    mvecIsBlock.clear();
+    
+    std::vector<std::vector<bool>> v (height, std::vector<bool>(width, false));
+    mvecIsBlock = v;
+
+    for(int ix = 0; ix < width; ix++) {
+        mvecIsBlock[ix][height] = true;
+        mstrDisplay[ix + (height * (width + 1))] = 'O';
+    }
+
+    for(int iy = 0; iy < height; iy++) {
+        mvecIsBlock[width][iy] = true;
+        mvecIsBlock[0][iy] = true;
+        mstrDisplay[width - 1 + (iy * (width + 1))] = 'O';
+        mstrDisplay[0 + (iy * (width + 1))] = 'O';
+    }
+    
+    return 0;
 }
 
 int TetrisScene::SetBlankChar(char c) {

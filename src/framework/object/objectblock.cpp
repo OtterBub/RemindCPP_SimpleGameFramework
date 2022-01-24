@@ -2,9 +2,9 @@
 #include <iostream>
 #include <curses.h>
 
-// gBlockPattern[BlockModel][Rotate][oneBlockPos][0(x), 1(x)]
+// gBlockPattern[BlockModel][Rotate][oneBlockPos][0(y), 1(x)]
 
-std::vector<std::vector<std::vector<std::vector<int>>>> gBlockPattern {
+const std::vector<std::vector<std::vector<std::vector<int>>>> gBlockPattern {
     { 
         { {0, 0}, {0, 1}, {1, 1}, {1, 0} }
     }, // O
@@ -13,13 +13,15 @@ std::vector<std::vector<std::vector<std::vector<int>>>> gBlockPattern {
         { {-1, 0}, {0, 0}, {1, 0}, {2, 0} }
     }, // I
     {
-        { {0, 0}, {1, 0}, {0, -1}, {0, -2} },
-        { {0, 0}, {1, 0}, {2, 0}, {0, 1} },
-        { {0, 0}, {-1, 0}, {0, 1}, {0, 2} },
-        { {0, 0}, {-1, 0}, {-2, 0}, {0, 1} }
+        { {0, 0}, {0, -1}, {0, 1}, {1, 1} },
+        { {0, 0}, {1, 0}, {-1, 0}, {-1, 1} },
+        { {0, 0}, {0, -1}, {-1, -1}, {0, 1} },
+        { {0, 0}, {-1, 0}, {1, 0}, {1, -1} }
     } // L
-    
 };
+
+// Maximum One Of Block Num
+#define BLOCKNUM 4
 
 ObjectBlock::ObjectBlock() : Object() {
     miSpeed = 1000;
@@ -27,6 +29,7 @@ ObjectBlock::ObjectBlock() : Object() {
     isStop = false;
     mBlockModel = BLOCKMODEL_L;
     mBlockRotate = 0;
+    mBlockRealPos = std::vector<std::vector<int>> (BLOCKNUM, std::vector<int>(2));
 }
 ObjectBlock::~ObjectBlock(){
     Object::~Object();
@@ -35,8 +38,12 @@ ObjectBlock::~ObjectBlock(){
 int ObjectBlock::Draw() {
     // mvprintw(mPos.y, mPos.x, "%c", mModel);
     
-    for (std::vector<int> i : gBlockPattern[mBlockModel][mBlockRotate]) {
-        mvprintw(mPos.y + i[0], mPos.x + i[1], "%c", mModel);
+    // for (std::vector<int> i : gBlockPattern[mBlockModel][mBlockRotate]) {
+    //     mvprintw(mPos.y + i[1], mPos.x + i[0], "%c", mModel);
+    // }
+
+    for(std::vector<int> pos : mBlockRealPos) {
+       mvprintw(pos[1], pos[0], "%c", mModel); 
     }
 
     // Test ObjectBlock Draw()
@@ -50,7 +57,15 @@ int ObjectBlock::Update(int time) {
         if(iTime > miSpeed) {
             mPos.y++;
             iTime = 0;
+
         }
+    }
+    // mBlockRealPos Update
+    int iIndexRealPos = 0;
+    for (std::vector<int> i : gBlockPattern[mBlockModel][mBlockRotate]) {
+        mBlockRealPos[iIndexRealPos][0] = mPos.x + i[0]; // x
+        mBlockRealPos[iIndexRealPos][1] = mPos.y + i[1]; // y
+        iIndexRealPos++;
     }
     return 0;
 }
@@ -90,6 +105,6 @@ int ObjectBlock::SetStop(bool stop) {
 }
 
 int ObjectBlock::BlockRotate(int rot) {
-    mBlockRotate = rot;
+    mBlockRotate = (mBlockRotate + 1) % gBlockPattern[mBlockModel].size();
     return 0;
 }

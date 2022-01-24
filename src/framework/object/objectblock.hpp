@@ -34,6 +34,7 @@ class ObjectBlock : public Object {
         int miSpeed;
         int mBlockModel;
         int mBlockRotate;
+        std::vector<std::vector<int>> mBlockRealPos;
 };
 
 #endif

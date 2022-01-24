@@ -22,7 +22,7 @@ class TetrisScene : public Scene {
         std::vector<std::vector<bool>> mvbIsBlock;
         std::string mStrTest;
         Object* mControlBlock;
-        bool* isBlock;
+        std::vector<std::vector<bool>> mvecIsBlock;
 };
 
 
