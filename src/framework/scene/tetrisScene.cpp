@@ -15,6 +15,7 @@ TetrisScene::TetrisScene() : Scene::Scene() {
 
     ObjectBlock* o = new ObjectBlock();
     o->SetModel('A');
+    o->SetBlockModel(BLOCKMODEL_L);
     o->SetPos(1, 1);
     o->SetSpeed(250);
     mObjManager.AddObj(o);
@@ -34,6 +35,7 @@ TetrisScene::TetrisScene() : Scene::Scene() {
     o->SetPos(5, 5);
     o->SetSpeed(500);
     o->SetStop(true);
+    mControlBlock = o;
 }
 
 TetrisScene::~TetrisScene() {
@@ -45,6 +47,8 @@ int TetrisScene::Draw() {
     callCount++;
     
     mvprintw(0, 0, "%s", mstrDisplay.c_str());
+
+
 
     mObjManager.Draw();
 
@@ -60,29 +64,42 @@ int TetrisScene::Update(int time) {
 }
 
 int TetrisScene::KeyInput(int key) {
-    switch(key)
-        {
-            case KEY_DOWN:
-                mStrTest = "KEY_DOWN";
-                break;
-            case KEY_UP:
-                mStrTest = "KEY_UP";
-                break;
-            case KEY_RIGHT:
-                mStrTest = "KEY_RIGHT";
-                break;
-            case KEY_LEFT:
-                mStrTest = "KEY_LEFT";
-                break;
-            default:
-                break;
-        }
+    iPos2D blockPos = {0, 0};
+    
+    if(mControlBlock != nullptr)
+        blockPos = mControlBlock->GetPos();
+        
+
+    switch(key) {
+        case KEY_DOWN:
+            mStrTest = "KEY_DOWN";
+            break;
+        case KEY_UP:
+            mStrTest = "KEY_UP";
+            
+            break;
+        case KEY_RIGHT:
+            mStrTest = "KEY_RIGHT";
+            mControlBlock->SetPos(blockPos.x+1, blockPos.y);
+            break;
+        case KEY_LEFT:
+            mStrTest = "KEY_LEFT";
+            mControlBlock->SetPos(blockPos.x-1, blockPos.y);
+            break;
+        default:
+            break;
+    }
     return 0;
 }
 
 int TetrisScene::SetDisplaySize(int width, int height) {
     mvprintw(20, 0, "TestrisScene Call SetDisplaySize()");
     mvbIsBlock = std::vector<std::vector<bool>> (width, std::vector<bool>(height, false));
+    if (isBlock != nullptr)
+        delete[] isBlock;
+        
+    // Block Check ([x + (y * width)] == true)
+    isBlock = new bool[width * height];
     return Scene::SetDisplaySize(width, height);
 }
 

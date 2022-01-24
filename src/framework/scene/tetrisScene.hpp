@@ -21,6 +21,8 @@ class TetrisScene : public Scene {
         ObjectManager mObjManager;
         std::vector<std::vector<bool>> mvbIsBlock;
         std::string mStrTest;
+        Object* mControlBlock;
+        bool* isBlock;
 };
 
 

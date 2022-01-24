@@ -9,7 +9,7 @@
 
 GameFrame::GameFrame(){
     mGameState = 0;
-    SetFPS(15);
+    SetFPS(30);
 }
 GameFrame::~GameFrame(){
 
