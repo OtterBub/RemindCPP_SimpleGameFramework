@@ -7,6 +7,12 @@
 #define BLOCKMODEL_O 0
 #define BLOCKMODEL_I 1
 #define BLOCKMODEL_L 2
+#define BLOCKMODEL_J 3
+#define BLOCKMODEL_T 4
+#define BLOCKMODEL_N 5
+#define BLOCKMODEL_S 6
+
+#define BLOCKMODEL_NUM 6
 
 class ObjectBlock : public Object {
     public:

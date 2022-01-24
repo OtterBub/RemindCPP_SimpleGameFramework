@@ -18,7 +18,7 @@ TetrisScene::TetrisScene() : Scene::Scene() {
     o->SetPos(5, 0);
     o->SetSpeed(500);
     o->SetStop(false);
-    o->SetBlockModel(BLOCKMODEL_L);
+    o->SetBlockModel(rand() % (BLOCKMODEL_NUM+1));
     mControlBlock = o;
 }
 
@@ -115,7 +115,7 @@ int TetrisScene::Update(int time) {
                 o->SetPos(5, 0);
                 o->SetSpeed(500);
                 o->SetStop(false);
-                o->SetBlockModel(BLOCKMODEL_L);
+                o->SetBlockModel(rand() % (BLOCKMODEL_NUM+1));
 
                 // Set Control Block
                 mControlBlock = o;
