@@ -20,9 +20,19 @@ int ObjectManager::Draw() {
 }
 
 int ObjectManager::Update(int time) {
-    for(Object* obj : mvObject) {
-        obj->Update(time);
+
+    std::vector<Object*>::iterator objIt = mvObject.begin();
+
+    for(; objIt != mvObject.end(); objIt++ ) {
+        (*objIt)->Update(time);
+        if((*objIt)->GetErase()){
+            mvObject.erase(objIt);
+        }
     }
+
+    // for(Object* obj : mvObject) {
+    //     obj->Update(time);
+    // }
     return 0;
 }
 

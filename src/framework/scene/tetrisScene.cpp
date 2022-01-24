@@ -30,10 +30,10 @@ int TetrisScene::Draw() {
     static int callCount = 0; // Test Draw Call Count
     callCount++;
     
+    // Draw Display
     mvprintw(0, 0, "%s", mstrDisplay.c_str());
 
-
-
+    // Draw Object
     mObjManager.Draw();
 
     // Test Draw Call Count
@@ -43,11 +43,15 @@ int TetrisScene::Draw() {
 }
 
 int TetrisScene::Update(int time) {
+
+    // Update Object
     mObjManager.Update(time);
 
-
+    // Update ControlBlock
     if(mControlBlock != nullptr) {
         ObjectBlock* objB = (ObjectBlock*) mControlBlock;
+
+        // if ControlBlock Arrived Down Time
         if(objB->GetIsDownMove()){
             bool downIsBlock = false;
             std::vector<iPos2D> objBPosVec = objB->GetRealPos();
@@ -66,24 +70,45 @@ int TetrisScene::Update(int time) {
                 }
 
                 // Line Clear (Working)
-                bool lineClear = false;
-                for(int iy = 0; iy < miHeight - 1; iy++) {
-                    
+                std::vector<int> vecClearStartY; // Clear Height
+                bool isThislineClear = true;
+                int ClearCount = 0;
+                for(int iy = 0; iy < miHeight; iy++) {
+                    isThislineClear = true;
                     for(int ix = 1; ix < miWidth - 1; ix++) {
                         if(mvecIsBlock[ix][iy] == false) {
-                            lineClear = false;
+                            isThislineClear = false;
                         }
                     }
-                    if(lineClear) {
-                        for(int ix = 1; ix <miWidth - 1; ix++)
-                        {
-                            mstrDisplay[ix + (iy * (miWidth + 1))] = ' ';
+                    if(isThislineClear){
+                        vecClearStartY.push_back(iy);
+                    }
+                }
+                // Down Block
+                for(int startY : vecClearStartY) {
+                    for(int delY = startY; delY > 0; delY--) {
+                        for(int delX = 1; delX < miWidth - 1; delX++) {
+                            mvecIsBlock[delX][delY] = mvecIsBlock[delX][delY-1];
+                            mstrDisplay[delX + (delY * (miWidth + 1))] = mstrDisplay[delX + ((delY - 1) * (miWidth + 1))];
                         }
                     }
                 }
-                    
 
+                // for(int ix = 1; ix < miWidth - 1; ix++) {
+                //     if(mvecIsBlock[ix][miHeight-1] == false) {
+                //         lineClear = false;
+                //     }
+                // }
+                // if(true) {
+                //     for(int ix = 1; ix < miWidth - 1; ix++) {
+                //         mvecIsBlock[ix][miHeight-1] = false;
+                //         mstrDisplay[ix + ((miHeight-1) * (miWidth + 1))] = ' ';
+                //     }
+                // }
+                
                 // Add New Block Object
+                objB->SetErase(true);
+
                 ObjectBlock* o;
                 o = (ObjectBlock*)mObjManager.AddObj(new ObjectBlock());
                 o->SetModel('D');
@@ -130,7 +155,7 @@ int TetrisScene::KeyInput(int key) {
                         if(mvecIsBlock[pos.x+1][pos.y] == true)
                             move = false;
                     }
-                    
+                    // Move Controlblock to the RIGHT
                     if (move)
                         mControlBlock->SetPos(blockPos.x+1, blockPos.y);
                     break;
@@ -142,11 +167,20 @@ int TetrisScene::KeyInput(int key) {
                         if(mvecIsBlock[pos.x-1][pos.y] == true)
                             move = false;
                     }
-                    
+                    // Move Controlblock to the LEFT
                     if (move)
                         mControlBlock->SetPos(blockPos.x-1, blockPos.y);
                     break;
+                case 'a':
+                    for(int delY = miHeight-1; delY > 0; delY--) {
+                        for(int delX = 1; delX < miWidth - 1; delX++) {
+                            mvecIsBlock[delX][delY] = mvecIsBlock[delX][delY-1];
+                            mstrDisplay[delX + (delY * (miWidth + 1))] = mstrDisplay[delX + ((delY - 1) * (miWidth + 1))];
+                        }
+                    }
+                    break;
                 default:
+                    mStrTest = key;
                     break;
             }
         }
@@ -161,16 +195,18 @@ int TetrisScene::SetDisplaySize(int width, int height) {
     std::vector<std::vector<bool>> v (height, std::vector<bool>(width, false));
     mvecIsBlock = v;
 
+    // Set Width Wall
     for(int ix = 0; ix < width; ix++) {
         mvecIsBlock[ix][height] = true;
-        mstrDisplay[ix + (height * (width + 1))] = 'O';
+        mstrDisplay[ix + (height * (width + 1))] = '-';
     }
 
+    // Set Height Wall
     for(int iy = 0; iy < height; iy++) {
         mvecIsBlock[width - 1][iy] = true;
         mvecIsBlock[0][iy] = true;
-        mstrDisplay[width - 1 + (iy * (width + 1))] = 'O';
-        mstrDisplay[0 + (iy * (width + 1))] = 'O';
+        mstrDisplay[width - 1 + (iy * (width + 1))] = '|';
+        mstrDisplay[0 + (iy * (width + 1))] = '|';
     }
     
     return 0;

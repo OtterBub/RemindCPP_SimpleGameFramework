@@ -6,6 +6,7 @@ Object::Object(){
     mPos.x = 0;
     mPos.y = 0;
     mModel = '0';
+    mErase = false;
 }
 Object::~Object(){
     
@@ -40,4 +41,13 @@ char Object::GetModel() {
 int Object::SetModel(char c) {
     mModel = c;
     return 0;
+}
+
+int Object::SetErase(bool erase) {
+    mErase = erase;
+    return 0;
+}
+
+bool Object::GetErase() {
+    return mErase;
 }

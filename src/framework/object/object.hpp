@@ -16,9 +16,13 @@ class Object {
         char GetModel();
         int SetModel(char c);
 
+        int SetErase(bool erase);
+        bool GetErase();
+
     protected:
         iPos2D mPos;
         wchar_t mModel;
+        bool mErase;
 };
 
 #endif //__OBJECT_HPP__
