@@ -29,7 +29,8 @@ ObjectBlock::ObjectBlock() : Object() {
     isStop = false;
     mBlockModel = BLOCKMODEL_L;
     mBlockRotate = 0;
-    mBlockRealPos = std::vector<std::vector<int>> (BLOCKNUM, std::vector<int>(2));
+    mBlockRealPos = std::vector<iPos2D> (BLOCKNUM, {0, 0});
+    isDownMove = false;
 }
 ObjectBlock::~ObjectBlock(){
     Object::~Object();
@@ -42,8 +43,8 @@ int ObjectBlock::Draw() {
     //     mvprintw(mPos.y + i[1], mPos.x + i[0], "%c", mModel);
     // }
 
-    for(std::vector<int> pos : mBlockRealPos) {
-       mvprintw(pos[1], pos[0], "%c", mModel); 
+    for(iPos2D pos : mBlockRealPos) {
+       mvprintw(pos.y, pos.x, "%c", mModel); 
     }
 
     // Test ObjectBlock Draw()
@@ -55,16 +56,15 @@ int ObjectBlock::Update(int time) {
     if(!isStop) {
         iTime += time;
         if(iTime > miSpeed) {
-            mPos.y++;
             iTime = 0;
-
-        }
+            isDownMove = true;
+        }    
     }
     // mBlockRealPos Update
     int iIndexRealPos = 0;
     for (std::vector<int> i : gBlockPattern[mBlockModel][mBlockRotate]) {
-        mBlockRealPos[iIndexRealPos][0] = mPos.x + i[0]; // x
-        mBlockRealPos[iIndexRealPos][1] = mPos.y + i[1]; // y
+        mBlockRealPos[iIndexRealPos].x = mPos.x + i[0]; // x
+        mBlockRealPos[iIndexRealPos].y = mPos.y + i[1]; // y
         iIndexRealPos++;
     }
     return 0;
@@ -104,7 +104,26 @@ int ObjectBlock::SetStop(bool stop) {
     return 0;
 }
 
+int ObjectBlock::DownMove() {
+    mPos.y++;
+    isDownMove = false;
+    return 0;
+}
+
+bool ObjectBlock::SetIsDownMove(bool setDownMove) {
+    isDownMove = setDownMove;
+    return isDownMove;
+}
+
+bool ObjectBlock::GetIsDownMove() {
+    return isDownMove;
+}
+
 int ObjectBlock::BlockRotate(int rot) {
     mBlockRotate = (mBlockRotate + 1) % gBlockPattern[mBlockModel].size();
     return 0;
+}
+
+std::vector<iPos2D> ObjectBlock::GetRealPos() {
+    return mBlockRealPos;
 }

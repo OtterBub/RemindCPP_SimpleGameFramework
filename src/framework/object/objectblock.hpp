@@ -26,15 +26,23 @@ class ObjectBlock : public Object {
         int SetSpeed(int speed);
         int SetStop(bool stop);
 
-        int BlockRotate(int rot);
+        int DownMove();
+        bool SetIsDownMove(bool setDownMove);
+        bool GetIsDownMove();
 
+        int BlockRotate(int rot);
+        
+        std::vector<iPos2D> GetRealPos();
+        
+        
     private:
         bool isStop;
+        bool isDownMove;
         int iTime;
         int miSpeed;
         int mBlockModel;
-        int mBlockRotate;
-        std::vector<std::vector<int>> mBlockRealPos;
+        int mBlockRotate;        
+        std::vector<iPos2D> mBlockRealPos;
 };
 
 #endif

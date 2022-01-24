@@ -12,29 +12,12 @@
 
 TetrisScene::TetrisScene() : Scene::Scene() {
     mStrTest = "";
-
-    ObjectBlock* o = new ObjectBlock();
-    o->SetModel('A');
-    o->SetBlockModel(BLOCKMODEL_L);
-    o->SetPos(1, 1);
-    o->SetSpeed(250);
-    mObjManager.AddObj(o);
-
-    o = new ObjectBlock();
-    o->SetModel('B');
-    o->SetPos(2, 2);
-    mObjManager.AddObj(o);
-
-    Object* b = new Object();
-    b->SetModel('C');
-    b->SetPos(2, 3);
-    mObjManager.AddObj(b);
-
+    ObjectBlock* o;
     o = (ObjectBlock*)mObjManager.AddObj(new ObjectBlock());
     o->SetModel('D');
-    o->SetPos(5, 5);
+    o->SetPos(5, 0);
     o->SetSpeed(500);
-    o->SetStop(true);
+    o->SetStop(false);
     o->SetBlockModel(BLOCKMODEL_L);
     mControlBlock = o;
 }
@@ -61,44 +44,91 @@ int TetrisScene::Draw() {
 
 int TetrisScene::Update(int time) {
     mObjManager.Update(time);
+
+
+    if(mControlBlock != nullptr) {
+        ObjectBlock* objB = (ObjectBlock*) mControlBlock;
+        if(objB->GetIsDownMove()){
+            bool downIsBlock = false;
+            std::vector<iPos2D> objBPosVec = objB->GetRealPos();
+            for(iPos2D pos : objBPosVec) {
+                if(mvecIsBlock[pos.x][pos.y+1]) {
+                   downIsBlock = true; 
+                };
+            }
+            if(downIsBlock) {
+                for(iPos2D pos : objBPosVec) {
+                    mvecIsBlock[pos.x][pos.y] = true;
+                    mstrDisplay[pos.x + (pos.y * (miWidth + 1))] = objB->GetModel();
+                }
+                ObjectBlock* o;
+                o = (ObjectBlock*)mObjManager.AddObj(new ObjectBlock());
+                o->SetModel('D');
+                o->SetPos(5, 0);
+                o->SetSpeed(500);
+                o->SetStop(false);
+                o->SetBlockModel(BLOCKMODEL_L);
+                mControlBlock = o;
+            } else {
+                objB->DownMove();
+            }
+        }
+            
+    }
     return 0;
 }
 
 int TetrisScene::KeyInput(int key) {
     iPos2D blockPos = {0, 0};
     ObjectBlock* objB;
-    if(mControlBlock != nullptr)
-        blockPos = mControlBlock->GetPos();
-        objB = (ObjectBlock*) mControlBlock;
+    if(mControlBlock != nullptr){ 
+            objB = (ObjectBlock*) mControlBlock;
+            blockPos = objB->GetPos();
+            std::vector<iPos2D> objpos = objB->GetRealPos();
+            bool move = true;
 
-    switch(key) {
-        case KEY_DOWN:
-            mStrTest = "KEY_DOWN";
-            break;
-        case KEY_UP:
-            mStrTest = "KEY_UP";
-            objB->BlockRotate(1);
-            break;
-        case KEY_RIGHT:
-            mStrTest = "KEY_RIGHT";
-            if (mvecIsBlock[blockPos.x+1][blockPos.y] == false)
-                mControlBlock->SetPos(blockPos.x+1, blockPos.y);
-            break;
-        case KEY_LEFT:
-            mStrTest = "KEY_LEFT";
-            if (mvecIsBlock[blockPos.x-1][blockPos.y] == false)
-                mControlBlock->SetPos(blockPos.x-1, blockPos.y);
-            break;
-        default:
-            break;
-    }
+            switch(key) {
+                case KEY_DOWN:
+                    mStrTest = "KEY_DOWN";
+                    objB->SetIsDownMove(true);
+                    break;
+                case KEY_UP:
+                    mStrTest = "KEY_UP";
+                    objB->BlockRotate(1);
+                    break;
+                case KEY_RIGHT:
+                    mStrTest = "KEY_RIGHT";
+
+                    for(iPos2D pos : objpos) {
+                        if(mvecIsBlock[pos.x+1][pos.y] == true)
+                            move = false;
+                    }
+                    
+                    if (move)
+                        mControlBlock->SetPos(blockPos.x+1, blockPos.y);
+                    break;
+
+                case KEY_LEFT:
+                    mStrTest = "KEY_LEFT";
+
+                    for(iPos2D pos : objpos) {
+                        if(mvecIsBlock[pos.x-1][pos.y] == true)
+                            move = false;
+                    }
+                    
+                    if (move)
+                        mControlBlock->SetPos(blockPos.x-1, blockPos.y);
+                    break;
+                default:
+                    break;
+            }
+        }
     return 0;
 }
 
 int TetrisScene::SetDisplaySize(int width, int height) {
     Scene::SetDisplaySize(width, height);
 
-    mvbIsBlock = std::vector<std::vector<bool>> (width, std::vector<bool>(height, false));
     mvecIsBlock.clear();
     
     std::vector<std::vector<bool>> v (height, std::vector<bool>(width, false));
@@ -110,7 +140,7 @@ int TetrisScene::SetDisplaySize(int width, int height) {
     }
 
     for(int iy = 0; iy < height; iy++) {
-        mvecIsBlock[width][iy] = true;
+        mvecIsBlock[width - 1][iy] = true;
         mvecIsBlock[0][iy] = true;
         mstrDisplay[width - 1 + (iy * (width + 1))] = 'O';
         mstrDisplay[0 + (iy * (width + 1))] = 'O';

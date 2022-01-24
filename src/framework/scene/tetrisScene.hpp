@@ -19,7 +19,6 @@ class TetrisScene : public Scene {
        
     protected:
         ObjectManager mObjManager;
-        std::vector<std::vector<bool>> mvbIsBlock;
         std::string mStrTest;
         Object* mControlBlock;
         std::vector<std::vector<bool>> mvecIsBlock;
