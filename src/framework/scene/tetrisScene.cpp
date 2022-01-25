@@ -20,6 +20,7 @@ TetrisScene::TetrisScene() : Scene::Scene() {
     o->SetStop(false);
     o->SetBlockModel(rand() % (BLOCKMODEL_NUM+1));
     mControlBlock = o;
+    mScore = 0;
 }
 
 TetrisScene::~TetrisScene() {
@@ -35,6 +36,9 @@ int TetrisScene::Draw() {
 
     // Draw Object
     mObjManager.Draw();
+    
+    // Draw UI
+    mvprintw(2, 20, "Score: %d", mScore);
 
     // Test Draw Call Count
     mvprintw(miHeight + 1, 0, "TetrisScene::Draw() Call count: %d", callCount);
@@ -92,6 +96,7 @@ int TetrisScene::Update(int time) {
                             mstrDisplay[delX + (delY * (miWidth + 1))] = mstrDisplay[delX + ((delY - 1) * (miWidth + 1))];
                         }
                     }
+                    mScore++;
                 }
 
                 // for(int ix = 1; ix < miWidth - 1; ix++) {
