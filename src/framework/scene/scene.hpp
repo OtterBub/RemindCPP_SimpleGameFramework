@@ -11,9 +11,9 @@ class Scene {
         Scene();
         ~Scene();
 
-       int Draw();
-       int Update(int time);
-       int KeyInput(int key);
+       virtual int Draw();
+       virtual int Update(int time);
+       virtual int KeyInput(int key);
        int SetDisplaySize(int width, int height);
        int SetBlankChar(char c);
        

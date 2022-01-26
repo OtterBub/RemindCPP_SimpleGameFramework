@@ -57,6 +57,17 @@ ObjectBlock::ObjectBlock() : Object() {
     mBlockRealPos = std::vector<iPos2D> (BLOCKNUM, {0, 0});
     isDownMove = false;
 }
+
+ObjectBlock::ObjectBlock(int x, int y) : Object(x, y) {
+    miSpeed = 1000;
+    iTime = 0;
+    isStop = false;
+    mBlockModel = BLOCKMODEL_L;
+    mBlockRotate = 0;
+    mBlockRealPos = std::vector<iPos2D> (BLOCKNUM, {0, 0});
+    isDownMove = false;
+}
+
 ObjectBlock::~ObjectBlock(){
     Object::~Object();
 }

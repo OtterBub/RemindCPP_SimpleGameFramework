@@ -98,26 +98,14 @@ int TetrisScene::Update(int time) {
                     }
                     mScore++;
                 }
-
-                // for(int ix = 1; ix < miWidth - 1; ix++) {
-                //     if(mvecIsBlock[ix][miHeight-1] == false) {
-                //         lineClear = false;
-                //     }
-                // }
-                // if(true) {
-                //     for(int ix = 1; ix < miWidth - 1; ix++) {
-                //         mvecIsBlock[ix][miHeight-1] = false;
-                //         mstrDisplay[ix + ((miHeight-1) * (miWidth + 1))] = ' ';
-                //     }
-                // }
                 
-                // Add New Block Object
+                // Erase Current Block Object from ObjectManager
                 objB->SetErase(true);
 
+                // Add New Block Object
                 ObjectBlock* o;
-                o = (ObjectBlock*)mObjManager.AddObj(new ObjectBlock());
+                o = (ObjectBlock*)mObjManager.AddObj(new ObjectBlock(5, 0));
                 o->SetModel('D');
-                o->SetPos(5, 0);
                 o->SetSpeed(500);
                 o->SetStop(false);
                 o->SetBlockModel(rand() % (BLOCKMODEL_NUM+1));

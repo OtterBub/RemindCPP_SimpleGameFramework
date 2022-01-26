@@ -5,6 +5,7 @@
 class Object {
     public:
         Object();
+        Object(int x, int y);
         ~Object();
 
         virtual int Draw();

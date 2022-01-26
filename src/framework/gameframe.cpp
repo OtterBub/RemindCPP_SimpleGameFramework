@@ -17,17 +17,25 @@ GameFrame::~GameFrame(){
         
 int GameFrame::Run(){
     std::cout << "GameFrame.Run()" << std::endl;
+
     TetrisScene s;
     s.SetBlankChar(' ');
     s.SetDisplaySize(15, 20);
-    int result;
+    
+    // Current Time
     std::chrono::system_clock::time_point curTime = std::chrono::system_clock::now();
+
+    // Delta Time
     std::chrono::duration<double> deltaTime;
     int ideltaTime = 0;
     while(1) {
+        // Calculate deltaTime
         deltaTime = std::chrono::system_clock::now() - curTime;
+
+        // Convert deltaTime to int
         ideltaTime = (int)(deltaTime.count() * 1000);
 
+        // return KeyInput
         int inputKeyResult = mKeyManager.InputKey();
         s.KeyInput(inputKeyResult);
         

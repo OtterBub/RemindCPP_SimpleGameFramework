@@ -17,6 +17,7 @@
 class ObjectBlock : public Object {
     public:
         ObjectBlock();
+        ObjectBlock(int x, int y);
         ~ObjectBlock();
 
         int Draw();

@@ -3,11 +3,17 @@
 #include <ncurses.h>
 
 Object::Object(){
-    mPos.x = 0;
+    mPos.x = 5;
     mPos.y = 0;
     mModel = '0';
     mErase = false;
 }
+
+Object::Object(int x, int y) : Object::Object() {
+    mPos.x = x;
+    mPos.y = y;
+}
+
 Object::~Object(){
     
 }
