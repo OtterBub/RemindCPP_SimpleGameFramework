@@ -50,6 +50,8 @@ class ObjectBlock : public Object {
         int mBlockModel;
         int mBlockRotate;        
         std::vector<iPos2D> mBlockRealPos;
+
+        int UpdateRealPos();
 };
 
 #endif

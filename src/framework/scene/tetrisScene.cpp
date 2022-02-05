@@ -127,8 +127,14 @@ int TetrisScene::KeyInput(int key) {
     if(mControlBlock != nullptr){ 
             objB = (ObjectBlock*) mControlBlock;
             blockPos = objB->GetPos();
+
+            // Move Collision Check
             std::vector<iPos2D> objpos = objB->GetRealPos();
             bool move = true;
+            
+            // Rotation Collision Check
+            std::vector<iPos2D> objRotpos;
+            bool rot = true;
 
             switch(key) {
                 case KEY_DOWN:
@@ -140,7 +146,21 @@ int TetrisScene::KeyInput(int key) {
                     mStrTest = "KEY_UP";
                     // Block Rotation
                     objB->BlockRotate(1);
+                    
+                    objRotpos = objB->GetRealPos();
+
+                    // Rotation Collision Check
+                    for(iPos2D pos : objRotpos) {
+                        if(mvecIsBlock[pos.x][pos.y] == true)
+                            rot = false;
+                    }
+
+                    // If Rotation Collision Check, rollback rotation
+                    if (rot == false)
+                        objB->BlockRotate(-1);
+
                     break;
+
                 case KEY_RIGHT:
                     mStrTest = "KEY_RIGHT";
                     // RIGHT Collision Check

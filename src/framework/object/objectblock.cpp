@@ -48,6 +48,8 @@ const std::vector<std::vector<std::vector<std::vector<int>>>> gBlockPattern {
 // Maximum One Of Block Num
 #define BLOCKNUM 4
 
+// Public
+
 ObjectBlock::ObjectBlock() : Object() {
     miSpeed = 1000;
     iTime = 0;
@@ -97,12 +99,7 @@ int ObjectBlock::Update(int time) {
         }    
     }
     // mBlockRealPos Update
-    int iIndexRealPos = 0;
-    for (std::vector<int> i : gBlockPattern[mBlockModel][mBlockRotate]) {
-        mBlockRealPos[iIndexRealPos].x = mPos.x + i[0]; // x
-        mBlockRealPos[iIndexRealPos].y = mPos.y + i[1]; // y
-        iIndexRealPos++;
-    }
+    ObjectBlock::UpdateRealPos();
     return 0;
 }
 
@@ -157,10 +154,23 @@ bool ObjectBlock::GetIsDownMove() {
 }
 
 int ObjectBlock::BlockRotate(int rot) {
-    mBlockRotate = (mBlockRotate + 1) % gBlockPattern[mBlockModel].size();
+    mBlockRotate = (mBlockRotate + rot) % gBlockPattern[mBlockModel].size();
+    ObjectBlock::UpdateRealPos();
     return 0;
 }
 
 std::vector<iPos2D> ObjectBlock::GetRealPos() {
     return mBlockRealPos;
+}
+
+// Private
+
+int ObjectBlock::UpdateRealPos() {
+    int iIndexRealPos = 0;
+    for (std::vector<int> i : gBlockPattern[mBlockModel][mBlockRotate]) {
+        mBlockRealPos[iIndexRealPos].x = mPos.x + i[0]; // x
+        mBlockRealPos[iIndexRealPos].y = mPos.y + i[1]; // y
+        iIndexRealPos++;
+    }
+    return 0;
 }
