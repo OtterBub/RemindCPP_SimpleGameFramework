@@ -73,7 +73,7 @@ int TetrisScene::Update(int time) {
                     mstrDisplay[pos.x + (pos.y * (miWidth + 1))] = objB->GetModel();
                 }
 
-                // Line Clear (Working)
+                // Line Clear
                 std::vector<int> vecClearStartY; // Clear Height
                 bool isThislineClear = true;
                 int ClearCount = 0;
@@ -90,12 +90,7 @@ int TetrisScene::Update(int time) {
                 }
                 // Down Block
                 for(int startY : vecClearStartY) {
-                    for(int delY = startY; delY > 0; delY--) {
-                        for(int delX = 1; delX < miWidth - 1; delX++) {
-                            mvecIsBlock[delX][delY] = mvecIsBlock[delX][delY-1];
-                            mstrDisplay[delX + (delY * (miWidth + 1))] = mstrDisplay[delX + ((delY - 1) * (miWidth + 1))];
-                        }
-                    }
+                    TetrisScene::LineClear(startY);
                     mScore++;
                 }
                 
@@ -184,13 +179,10 @@ int TetrisScene::KeyInput(int key) {
                     if (move)
                         mControlBlock->SetPos(blockPos.x-1, blockPos.y);
                     break;
+
+                // CheatKey Line Clear
                 case 'a':
-                    for(int delY = miHeight-1; delY > 0; delY--) {
-                        for(int delX = 1; delX < miWidth - 1; delX++) {
-                            mvecIsBlock[delX][delY] = mvecIsBlock[delX][delY-1];
-                            mstrDisplay[delX + (delY * (miWidth + 1))] = mstrDisplay[delX + ((delY - 1) * (miWidth + 1))];
-                        }
-                    }
+                    TetrisScene::LineClear(miHeight - 1);
                     break;
                 default:
                     mStrTest = key;
@@ -230,3 +222,15 @@ int TetrisScene::SetBlankChar(char c) {
 }
 
 // ---- protected ----
+
+// ---- private ----
+
+int TetrisScene::LineClear(int clearStartY) {
+    for(int delY = clearStartY; delY > 0; delY--) {
+        for(int delX = 1; delX < miWidth - 1; delX++) {
+            mvecIsBlock[delX][delY] = mvecIsBlock[delX][delY-1];
+            mstrDisplay[delX + (delY * (miWidth + 1))] = mstrDisplay[delX + ((delY - 1) * (miWidth + 1))];
+        }
+    }   
+    return 0;
+}

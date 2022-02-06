@@ -23,6 +23,10 @@ class TetrisScene : public Scene {
         Object* mControlBlock;
         std::vector<std::vector<bool>> mvecIsBlock;
         int mScore;
+
+    private:
+        // int clearStartY - Line Clear starting point Y Position
+        int LineClear(int clearStartY);
 };
 
 
