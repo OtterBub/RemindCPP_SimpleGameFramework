@@ -16,7 +16,6 @@ class Scene {
        virtual int KeyInput(int key);
        int SetDisplaySize(int width, int height);
        int SetBlankChar(char c);
-       
        int SetBlankChar(wchar_t c);
        
     protected:

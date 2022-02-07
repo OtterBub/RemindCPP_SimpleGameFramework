@@ -41,8 +41,8 @@ int TetrisScene::Draw() {
     mvprintw(2, 20, "Score: %d", mScore);
 
     // Test Draw Call Count
-    mvprintw(miHeight + 1, 0, "TetrisScene::Draw() Call count: %d", callCount);
-    mvprintw(miHeight + 2, 0, "KeyInput : %s                 ", mStrTest.c_str());
+    // mvprintw(miHeight + 1, 0, "TetrisScene::Draw() Call count: %d", callCount);
+    // mvprintw(miHeight + 2, 0, "KeyInput : %s                 ", mStrTest.c_str());
     return 0;
 }
 
@@ -77,9 +77,9 @@ int TetrisScene::Update(int time) {
                 std::vector<int> vecClearStartY; // Clear Height
                 bool isThislineClear = true;
                 int ClearCount = 0;
-                for(int iy = 0; iy < miHeight; iy++) {
+                for(int iy = 0; iy < miHeight - 1; iy++) {
                     isThislineClear = true;
-                    for(int ix = 1; ix < miWidth - 1; ix++) {
+                    for(int ix = 1; ix < miWidth - 2; ix++) {
                         if(mvecIsBlock[ix][iy] == false) {
                             isThislineClear = false;
                         }
@@ -182,7 +182,7 @@ int TetrisScene::KeyInput(int key) {
 
                 // CheatKey Line Clear
                 case 'a':
-                    TetrisScene::LineClear(miHeight - 1);
+                    TetrisScene::LineClear(miHeight - 2);
                     break;
                 default:
                     mStrTest = key;
@@ -202,17 +202,18 @@ int TetrisScene::SetDisplaySize(int width, int height) {
 
     // Set Width Wall
     for(int ix = 0; ix < width; ix++) {
-        mvecIsBlock[ix][height] = true;
-        mstrDisplay[ix + (height * (width + 1))] = '-';
+        mvecIsBlock[ix][height - 1] = true;
+        mstrDisplay[ix + ((height - 1) * (width + 1))] = '-';
     }
 
     // Set Height Wall
-    for(int iy = 0; iy < height; iy++) {
+    for(int iy = 0; iy < height - 1; iy++) {
         mvecIsBlock[width - 1][iy] = true;
         mvecIsBlock[0][iy] = true;
         mstrDisplay[width - 1 + (iy * (width + 1))] = '|';
         mstrDisplay[0 + (iy * (width + 1))] = '|';
     }
+    // mstrDisplay.push_back('-');
     
     return 0;
 }
