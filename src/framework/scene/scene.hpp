@@ -17,6 +17,8 @@ class Scene {
        int SetDisplaySize(int width, int height);
        int SetBlankChar(char c);
        
+       int SetBlankChar(wchar_t c);
+       
     protected:
         int InitDisplay();
 
@@ -24,6 +26,10 @@ class Scene {
         int miHeight;
         std::string mstrDisplay;
         char mcBlankChar;
+        
+        // For Changed Unicode Display
+        std::wstring mwstrDisplay;
+        wchar_t mcBlockwChar;
 };
 
 #endif //__SCENE_HPP__
